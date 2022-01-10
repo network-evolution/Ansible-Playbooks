@@ -1,0 +1,17 @@
+---
+- name: IOS Config Demo
+  hosts: routers_ssh_pass
+
+  tasks:
+    - name: Config from file
+      ios_config:
+        src: int_conf.txt
+        diff_against: startup
+        save_when: modified
+
+    - name: Get facts
+      ios_facts:
+        gather_subset: all
+
+    - debug:
+        msg: "{{ ansible_net_interfaces }}"

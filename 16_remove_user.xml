@@ -1,0 +1,13 @@
+<config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <native
+            xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+        <username operation='delete'>
+            <name>netconf_test</name>
+            <privilege>15</privilege>
+            <secret>
+                <encryption>0</encryption>
+                <secret>password123</secret>
+            </secret>
+        </username>
+    </native>
+</config>

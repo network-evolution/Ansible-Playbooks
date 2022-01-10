@@ -1,0 +1,97 @@
+---
+- name: IOS Config Demo
+  hosts: switches
+ ### Using Merged
+  tasks:
+    - name: Create VLAN
+      ios_vlans:
+        config:
+          - name: vlan_100
+            vlan_id: 100
+            shutdown: enabled
+            state: suspend
+        state: merged
+      register: vln
+
+    - debug:
+        var: vln.before
+    - debug:
+        var: vln.commands
+    - debug:
+        var: vln.after
+
+####### Replaced
+    - name: Create VLAN
+      ios_vlans:
+        config:
+          - name: vlan_100
+            vlan_id: 100
+            shutdown: enabled
+            state: suspend
+        state: replaced
+      register: vln
+
+    - debug:
+        var: vln.before
+    - debug:
+        var: vln.commands
+    - debug:
+        var: vln.after
+
+###### Create Multiple VLANs
+    - name: Create Multiple VLANs
+      ios_vlans:
+        config:
+          - name: vlan_101
+            vlan_id: 101
+          - name: vlan_102
+            vlan_id: 102
+          - name: vlan_103
+            vlan_id: 103
+        state: merged
+      register: vln
+
+    - debug:
+        var: vln.before
+    - debug:
+        var: vln.commands
+    - debug:
+        var: vln.after
+
+    ##### Create Delete VLANs
+    - name: Create Multiple VLANs
+      ios_vlans:
+        config:
+          - vlan_id: 102
+          - vlan_id: 103
+        state: deleted
+      register: vln
+
+    - debug:
+        var: vln.before
+    - debug:
+        var: vln.commands
+    - debug:
+        var: vln.after
+
+###### Create Multiple VLANs
+    - name: Create Multiple VLANs
+      ios_vlans:
+        config:
+          - name: vlan_100
+            vlan_id: 100
+          - name: vlan_101
+            vlan_id: 101
+          - name: vlan_102
+            vlan_id: 102
+          - name: vlan_103
+            vlan_id: 103
+        state: overridden
+      register: vln
+
+    - debug:
+        var: vln.before
+    - debug:
+        var: vln.commands
+    - debug:
+        var: vln.after

@@ -1,0 +1,16 @@
+---
+- name: Configure Interface and User
+  hosts: lab_iosxe
+
+  tasks:
+    ########## Configure Interface
+    - name: From file
+      netconf_config:
+        backup: yes
+        content: "{{ lookup('file', '15_set_interface.xml')}}"
+
+    ########## Configure Username
+    - name: From file
+      netconf_config:
+        backup: yes
+        content: "{{ lookup('file', '15_set_user.xml')}}"

@@ -1,0 +1,46 @@
+---
+- name: IOS Static Route Demo
+  hosts: routers_ssh_pass
+  tasks:
+    ################### IP Config Merged ##############
+    - name: Config Static Route1
+      ios_static_route:
+        prefix: 10.1.1.0
+        mask: 255.255.255.0
+        next_hop: 192.168.0.1
+        state: present
+      register: route1
+    - debug:
+        var: route1.commands
+    ################### IP Config Merged ##############
+    - name: Config Static Route2
+      ios_static_route:
+        prefix: 10.1.2.0
+        mask : 255.255.255.0
+        interface: GigabitEthernet0/1
+        state: present
+      register: route2
+    - debug:
+        var: route2.commands
+
+    ################### IP Config Aggregate ##############
+    - name: Config Static Route3
+      ios_static_route:
+        aggregate:
+          - { prefix: 10.1.3.0, mask : 255.255.255.0, interface: GigabitEthernet0/1}
+          - { prefix: 10.1.4.0, mask : 255.255.255.0, interface: GigabitEthernet0/1}
+        state: present
+      register: route3
+    - debug:
+        var: route3.commands
+
+  ################### IP Route Delete##############
+    - name: Remove static Route
+      ios_static_route:
+        prefix: 10.1.2.0
+        mask : 255.255.255.0
+        interface: GigabitEthernet0/1
+        state: absent
+      register: route2
+    - debug:
+        var: route2.commands

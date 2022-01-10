@@ -1,0 +1,53 @@
+---
+- name: IOS Config Demo
+  hosts: switches
+
+  tasks:
+    - name: Configure Access
+      ios_l2_interfaces:
+        config:
+          - name: GigabitEthernet0/2
+            access:
+              vlan: 10
+        state: merged
+############# Trunk with Merged ##################
+    - name: Configure Trunk
+      ios_l2_interfaces:
+        config:
+          - name: GigabitEthernet0/2
+            trunk:
+              allowed_vlans: 11-15
+              encapsulation: dot1q
+              native_vlan: 5
+        state: merged
+
+    ############ Trunk with Replaced ##################
+    - name: Configure Trunk
+      ios_l2_interfaces:
+        config:
+          - name: GigabitEthernet0/2
+            trunk:
+              allowed_vlans: 11-15
+              encapsulation: dot1q
+              native_vlan: 5
+        state: replaced
+      register: int
+
+    - debug:
+        var: int.before
+    - debug:
+        var: int.commands
+    - debug:
+        var: int.after
+
+
+    ############ Trunk with Replaced ##################
+    - name: Configure Trunk
+      ios_l2_interfaces:
+        config:
+          - name: GigabitEthernet0/2
+            trunk:
+              allowed_vlans: 11-15
+              encapsulation: dot1q
+              native_vlan: 5
+        state: overridden

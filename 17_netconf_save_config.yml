@@ -1,0 +1,13 @@
+---
+- name: Save Config
+  hosts: lab_iosxe
+
+  tasks:
+    ########## Configure Interface
+    - name: Save Config
+      netconf_rpc:
+        rpc: save-config
+        xmlns: "http://cisco.com/yang/cisco-ia"
+      register: reply
+    - debug:
+        var: reply

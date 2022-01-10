@@ -1,0 +1,35 @@
+---
+- name: IOS Add User Demo
+  hosts: routers_ssh_pass
+  tasks:
+#    ################### IP Config Merged ##############
+    - name: Add User
+      ios_user:
+        name: ansible_admin
+        hashed_password:
+          type: 5
+          value: $1$pass$q.8O0ezj5JxZNEcvsQvQR0
+        privilege: 15
+        state: present
+      register: add_user
+    - debug:
+        var: add_user.commands
+
+    ################### IP Config Merged ##############
+    - name: Add User
+      ios_user:
+        name: ansible_admin
+        state: absent
+      register: remove_user
+    - debug:
+        var: remove_user.commands
+
+  ################### Purge Method ##############
+    - name: Purge user account
+      ios_user:
+        aggregate:
+          - name: admin1
+        purge: yes
+      register: remove_user
+    - debug:
+        var: remove_user.commands

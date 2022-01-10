@@ -1,0 +1,29 @@
+---
+- name: IOS Config Demo
+  hosts: routers_ssh_pass
+
+  tasks:
+    - name: Config mode command
+      ios_config:
+        lines:
+          - ip domain name test.com
+    - name: Configure interface with IP
+      ios_config:
+        parents: interface GigabitEthernet0/1
+        lines:
+          - ip address 2.2.2.2 255.255.255.0
+          - description ansible_configured
+        diff_against: startup
+        save_when: modified
+
+    - name: Configure Multiple interfaces
+      ios_config:
+        parents: "{{ item }}"
+        lines:
+          - description backup_int
+        after:
+          - no shutdown
+        save_when: modified
+      with_items:
+        - interface GigabitEthernet0/2
+        - interface GigabitEthernet0/3

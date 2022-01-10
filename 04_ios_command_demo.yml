@@ -1,0 +1,23 @@
+---
+- name: Cisco IOS Command Demo
+  hosts: routers
+
+  tasks:
+    - name: Execute show commands
+      ios_command:
+        commands:
+          - show run
+          - show ip int brief
+      register: sh_outputs
+    - debug:
+        msg: "{{sh_outputs.stdout_lines}}"
+
+    - name: Check Conditions
+      ios_command:
+        commands:
+          - show run
+          - show ip int brief
+        match: any
+        wait_for:
+          - result[0] contains description connected to core
+          - result[1] contains GigabitEthernet0/1

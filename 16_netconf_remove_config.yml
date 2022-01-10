@@ -1,0 +1,16 @@
+---
+- name: Delete Interface and User
+  hosts: lab_iosxe
+
+  tasks:
+    ########## Configure Interface
+    - name: From file
+      netconf_config:
+        backup: yes
+        content: "{{ lookup('file', '16_remove_interface.xml')}}"
+
+    ########## Configure Username
+    - name: From file
+      netconf_config:
+        backup: yes
+        content: "{{ lookup('file', '16_remove_user.xml')}}"

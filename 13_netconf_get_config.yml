@@ -1,0 +1,52 @@
+---
+- name: Get Config
+  hosts: lab_iosxe
+
+  tasks:
+  ########## Get COnfig
+#    - name: Print Running Config
+#      netconf_get:
+#        source: running
+#        display: json
+#      register: config_out
+#    - debug:
+#        var: config_out["output"]
+
+####### Get Hostname
+    - name: Get Hostname
+      netconf_get:
+        source: running
+        display: json
+        filter:
+          <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+          <hostname></hostname>
+          </native>
+      register: config_out
+    - debug:
+        var: config_out["output"]
+
+#    ###### Get Interface
+    - name: Get Interfaces
+      netconf_get:
+        source: running
+        display: json
+        filter:
+          <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+          <interface></interface>
+          </native>
+      register: config_out
+    - debug:
+        var: config_out["output"]
+
+    ###### Get Username
+    - name: Get Username
+      netconf_get:
+        source: running
+        display: json
+        filter:
+          <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+          <username></username>
+          </native>
+      register: config_out
+    - debug:
+        var: config_out["output"]

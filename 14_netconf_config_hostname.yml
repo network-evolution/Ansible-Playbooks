@@ -1,0 +1,24 @@
+---
+- name: Configure Hostname
+  hosts: lab_iosxe
+
+  tasks:
+#    ########## Configure Hostname
+    - name: Direct content
+      netconf_config:
+        backup: yes
+        content: |
+          <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+              <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+                  <hostname>CSR01</hostname>
+              </native>
+          </config>
+
+    ########## Configure Hostname
+    - name: From file
+      netconf_config:
+        backup: yes
+        content: "{{ lookup('file', '14_set_hostname.xml')}}"
+      register: netconf_data
+    - debug:
+        var: netconf_data.server_capabilities

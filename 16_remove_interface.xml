@@ -1,0 +1,23 @@
+<config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <interfaces
+            xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface>
+            <name>GigabitEthernet2</name>
+            <type
+                    xmlns:ianaift="urn:ietf:params:xml:ns:yang:iana-if-type">ianaift:ethernetCsmacd
+
+            </type>
+            <enabled>true</enabled>
+            <ipv4
+                    xmlns="urn:ietf:params:xml:ns:yang:ietf-ip">
+                <address operation='delete'>
+                    <ip>22.22.22.4</ip>
+                    <netmask>255.255.255.0</netmask>
+                </address>
+            </ipv4>
+            <ipv6
+                    xmlns="urn:ietf:params:xml:ns:yang:ietf-ip">
+            </ipv6>
+        </interface>
+    </interfaces>
+</config>

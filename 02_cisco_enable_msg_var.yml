@@ -1,0 +1,28 @@
+---
+- name: Cisco Enable password, Debug- Var,msg
+  hosts: routers
+
+  tasks:
+    - name: Get facts
+      debug:
+        msg:
+         - "Hostname is: {{ansible_net_hostname}}"
+         - "Image is: {{ansible_net_image}}"
+#        var: ansible_facts
+    - name: Execute show command to test enable password
+      ios_command:
+        commands:
+          - show run
+
+    - name: Get facts with Variable Name
+      ios_facts:
+        gather_subset: all
+      register: saved_facts
+
+    - debug:
+        var: saved_facts
+
+    - debug:
+        msg:
+          - "{{saved_facts['ansible_facts']['ansible_net_hostname']}}"
+          - "{{saved_facts['ansible_facts']['ansible_net_all_ipv4_addresses']}}"

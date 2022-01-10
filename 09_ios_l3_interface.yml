@@ -1,0 +1,54 @@
+---
+- name: IOS Config Demo
+  hosts: routers_ssh_pass
+  tasks:
+################### IP Config Merged ##############
+    - name: Interface Configuration
+      ios_l3_interfaces:
+        config:
+          - name: GigabitEthernet0/1
+            ipv4:
+              - address: 2.2.2.5 255.255.255.0
+        state: merged
+      register: int
+
+    - debug:
+        var: int.before
+    - debug:
+        var: int.commands
+    - debug:
+        var: int.after
+
+    ################## IP Config Replaced ##############
+    - name: Interface Configuration
+      ios_l3_interfaces:
+        config:
+          - name: GigabitEthernet0/1
+            ipv4:
+              - address: 2.2.2.6 255.255.255.0
+        state: replaced
+      register: int
+
+    - debug:
+        var: int.before
+    - debug:
+        var: int.commands
+    - debug:
+        var: int.after
+
+    ################## IP Config Deleted ##############
+    - name: Interface Configuration
+      ios_l3_interfaces:
+        config:
+          - name: GigabitEthernet0/1
+          - name: GigabitEthernet0/2
+        state: deleted
+
+    ################## IP Config Overridden ##############
+    - name: Interface Configuration
+      ios_l3_interfaces:
+        config:
+          - name: GigabitEthernet0/1
+            ipv4:
+              - address: 2.2.2.7 255.255.255.0
+        state: overridden
