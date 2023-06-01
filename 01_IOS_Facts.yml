@@ -6,7 +6,7 @@
         var: ansible_facts
 
     - name: Gather IOS Facts 02
-      ios_facts:
+      cisco.ios.ios_facts:
         gather_subset: all
       register: all_subset
 
@@ -15,7 +15,7 @@
         var: all_subset
 
     - name: Gather HW
-      ios_facts:
+      cisco.ios.ios_facts:
         gather_subset: hardware
       register: hw
     - name: Print HW
@@ -23,7 +23,7 @@
         var: hw
 
     - name: Gather Int
-      ios_facts:
+      cisco.ios.ios_facts:
         gather_subset: interfaces
       register: int
     - name: Print Interfaces
