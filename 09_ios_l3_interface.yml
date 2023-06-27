@@ -1,12 +1,12 @@
 ---
 - name: IOS Config Demo
-  hosts: routers_ssh_pass
+  hosts: routers
   tasks:
 ################### IP Config Merged ##############
     - name: Interface Configuration
       ios_l3_interfaces:
         config:
-          - name: GigabitEthernet0/1
+          - name: GigabitEthernet
             ipv4:
               - address: 2.2.2.5 255.255.255.0
         state: merged
