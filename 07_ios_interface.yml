@@ -2,7 +2,7 @@
 
 # - name: Cisco ios config examples
 #   gather_facts: False
-#   hosts: r1
+#   hosts: routers
 #   connection: ansible.netcommon.network_cli
 
 #   tasks:
